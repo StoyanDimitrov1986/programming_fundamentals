@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string|null $name
+ * @property string|null $solution
  * @property int|null $is_deleted
  *
  * @property LectureQuestion[] $lectureQuestions
@@ -29,6 +30,7 @@ class Lecture extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['solution'], 'string'],
             [['is_deleted'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -42,7 +44,8 @@ class Lecture extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'is_deleted' => 'Is Deleted',
+            'solution' => 'Solution',
+            'is_deleted' => 'Is deleted',
         ];
     }
 
