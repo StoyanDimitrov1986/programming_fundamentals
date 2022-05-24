@@ -28,6 +28,7 @@ return [
             'admin/*',
             'lecture/*',
             'question/*',
+            'test/*',
             'gii/*'
 //            'some-controller/some-action',
             // The actions listed here will be allowed to everyone including guests.
