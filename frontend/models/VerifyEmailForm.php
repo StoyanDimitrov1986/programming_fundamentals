@@ -47,17 +47,15 @@ class VerifyEmailForm extends Model
     {
         $user = $this->_user;
         $user->status = User::STATUS_ACTIVE;
-        $user->status = User::STATUS_ACTIVE;
 
         if ($user->save(false)) {
-            $auth = \Yii::$app->authManager;
-            $defaultRole = $auth->getRole(User::DEFAULT_ROLE);
-            $auth->assign($defaultRole, $user->getId());
+            $user->assignDefaultRole();
+
+            $user->generateTestQuestions();
 
             return  $user;
         } else {
             return null;
         }
-        return $user->save(false) ? $user : null;
     }
 }

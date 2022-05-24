@@ -211,4 +211,46 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function assignDefaultRole()
+    {
+        // Assign default role 'student'
+        $auth = \Yii::$app->authManager;
+        $defaultRole = $auth->getRole(User::DEFAULT_ROLE);
+        $auth->assign($defaultRole, $this->getId());
+    }
+
+    public function generateTestQuestions()
+    {
+        // Generate tests
+        $lectures = Lecture::find()->all();
+
+        foreach ($lectures as $lecture) {
+            $test = new Test();
+
+            $test->setAttributes([
+                'user_id' => $this->getId(),
+                'lecture_id' => $lecture->id
+            ]);
+
+            $test->save();
+
+            $questions = Question::find()->where(['lecture_id' => $lecture->id])->all();
+
+            $randomQuestionKeys = array_rand($questions, 3);
+
+            foreach ($randomQuestionKeys as $randomQuestionKey) {
+                $randomQuestion = $questions[$randomQuestionKey];
+
+                $testQuestion = new TestQuestion();
+
+                $testQuestion->setAttributes([
+                    'test_id' => $test->id,
+                    'question_id' => $randomQuestion->id,
+                ]);
+
+                $testQuestion->save();
+            }
+        }
+    }
 }

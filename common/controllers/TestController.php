@@ -39,6 +39,8 @@ class TestController extends Controller
     public function actionIndex()
     {
         $searchModel = new TestSearch();
+
+        $searchModel->user_id = \Yii::$app->user->getId();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('@common/views/test/index', [

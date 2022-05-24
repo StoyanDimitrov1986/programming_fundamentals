@@ -2,6 +2,10 @@
 
 namespace frontend\controllers;
 
+use common\models\Lecture;
+use common\models\Test;
+use common\models\TestQuestion;
+use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
