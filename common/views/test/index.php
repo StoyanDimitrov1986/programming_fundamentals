@@ -9,7 +9,6 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Tests';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="test-index">
 
@@ -17,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             [
                 'label' => 'Lecture',
@@ -27,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'label' => 'status',
+                'label' => 'Status',
                 'value' => function (Test $model) {
                     return $model->getDisplayStatus();
                 },
