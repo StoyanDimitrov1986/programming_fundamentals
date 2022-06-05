@@ -1,7 +1,8 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
+use common\models\Test;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -10,6 +11,9 @@ use yii\data\ActiveDataProvider;
  */
 class TestSearch extends Test
 {
+    public $user;
+    public $userEmail;
+
     /**
      * {@inheritdoc}
      */
@@ -17,7 +21,7 @@ class TestSearch extends Test
     {
         return [
             [['id', 'user_id', 'lecture_id'], 'integer'],
-            [['status'], 'safe'],
+            [['status', 'user', 'userEmail'], 'safe'],
         ];
     }
 
@@ -41,11 +45,22 @@ class TestSearch extends Test
     {
         $query = Test::find();
 
-        // add conditions that should always apply here
+        $query->joinWith(['user']);
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['user'] = [
+            'asc' => ['user.username' => SORT_ASC],
+            'desc' => ['user.username' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['userEmail'] = [
+            'asc' => ['user.email' => SORT_ASC],
+            'desc' => ['user.email' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -56,38 +71,10 @@ class TestSearch extends Test
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'lecture_id' => $this->lecture_id,
-        ]);
-
-        $query->andFilterWhere(['like', 'status', $this->status]);
-
-        return $dataProvider;
-    }
-
-    public function evaluationSearch($params)
-    {
-        $query = Test::find();
-
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        $query->andFilterWhere(
-            ['in', 'status', [Test::STATUS_WAITING_EVALUATION, Test::STATUS_EVALUATED]]
-        );
+        $query->andFilterWhere(['in', 'test.status', [Test::STATUS_WAITING_EVALUATION, Test::STATUS_EVALUATED]])
+            ->andFilterWhere(['test.status' => $this->status])
+            ->andFilterWhere(['like', 'user.username', $this->user])
+            ->andFilterWhere(['like', 'user.email', $this->userEmail]);
 
 
         return $dataProvider;

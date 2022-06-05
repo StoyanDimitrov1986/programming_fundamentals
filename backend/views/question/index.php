@@ -25,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             [
                 'label' => 'Lecture',
@@ -38,16 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Is deleted',
                 'value' => function ($model) {
-
                     return $model->is_deleted === 0 ? 'No' : 'Yes';
-
                 },
             ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Question $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>

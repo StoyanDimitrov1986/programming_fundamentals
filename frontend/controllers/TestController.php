@@ -4,12 +4,9 @@ namespace frontend\controllers;
 
 use common\models\Answer;
 use common\models\Test;
-use common\models\TestQuestion;
 use common\models\TestSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use function Couchbase\defaultDecoder;
 
 /**
  * TestController implements the CRUD actions for Test model.
