@@ -11,7 +11,7 @@ use yii\helpers\Url;
 /* @var $searchModel backend\models\TestSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tests';
+$this->title = 'Evaluating tests';
 ?>
 <div class="test-index">
 
