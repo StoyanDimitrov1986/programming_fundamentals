@@ -19,13 +19,13 @@ use Yii;
 class Test extends \yii\db\ActiveRecord
 {
     const STATUS_NOT_STARTED = 'not_started';
-    const STATUS_NOT_SEND = 'not_send';
+    const STATUS_IN_PROGRESS = 'in_progress';
     const STATUS_WAITING_EVALUATION = 'waiting_evaluation';
     const STATUS_EVALUATED = 'evaluated';
 
     const DISPLAY_STATUSES = [
         self::STATUS_NOT_STARTED => 'Not started',
-        self::STATUS_NOT_SEND => 'Not send',
+        self::STATUS_IN_PROGRESS => 'In progress',
         self::STATUS_WAITING_EVALUATION => 'Waiting evaluation',
         self::STATUS_EVALUATED => 'Evaluated',
     ];

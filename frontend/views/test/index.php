@@ -9,7 +9,7 @@ use yii\helpers\Url;
 /* @var $searchModel common\models\TestSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tests';
+$this->title = 'My tests';
 ?>
 <div class="test-index">
 
@@ -22,7 +22,11 @@ $this->title = 'Tests';
                 'label' => 'Lecture',
                 'format' => 'raw',
                 'value' => function (Test $model) {
-                    return  Html::a(Html::encode($model->lecture->name),Url::to(['/test_questions/take/', 'id' => $model->id]));
+                    if (!in_array($model->status, [Test::STATUS_IN_PROGRESS, Test::STATUS_NOT_STARTED])) {
+                        return Html::a(Html::encode($model->lecture->name), Url::to(['/test/view/' , 'id' => $model->id]));
+                    }
+
+                    return Html::a(Html::encode($model->lecture->name), Url::to(['/test/take/' ,'id' => $model->id]));
                 },
             ],
             [

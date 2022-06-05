@@ -20,6 +20,12 @@ return [
             // uncomment if you want to cache RBAC items hierarchy
             // 'cache' => 'cache',
         ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+            ],
+        ],
     ],
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
@@ -37,5 +43,5 @@ return [
             // add a lot of actions here until you finally completed setting up rbac,
             // otherwise you may not even take a first step.
         ]
-    ],
+    ]
 ];
