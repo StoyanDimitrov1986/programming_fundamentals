@@ -99,4 +99,30 @@ class Test extends \yii\db\ActiveRecord
     {
         return self::DISPLAY_STATUSES[$this->status];
     }
+
+    public function getAvgScore()
+    {
+        $totalScore = [];
+
+        foreach ($this->testQuestions as $testQuestion) {
+            foreach ($testQuestion->answers as $answer) {
+                $totalScore[] = $answer->evaluation->score;
+            }
+        }
+
+        $avgScore = array_sum($totalScore) / count($totalScore);
+
+        return number_format($avgScore, '2');
+    }
+
+    public function getDisplayStatusWithAvgScoreOrDisplayStatus()
+    {
+        $status = $this->getDisplayStatus();
+
+        if ($this->status !== Test::STATUS_EVALUATED) {
+            return $status;
+        }
+
+        return $status . ' (' . $this->getAvgScore() . ')';
+    }
 }

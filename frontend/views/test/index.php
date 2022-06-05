@@ -31,8 +31,13 @@ $this->title = 'My tests';
             ],
             [
                 'label' => 'Status',
+                'attribute' => 'status',
+                'filter' => [
+                    Test::STATUS_WAITING_EVALUATION => Test::DISPLAY_STATUSES[Test::STATUS_WAITING_EVALUATION],
+                    Test::STATUS_EVALUATED => Test::DISPLAY_STATUSES[Test::STATUS_EVALUATED]
+                ],
                 'value' => function (Test $model) {
-                    return $model->getDisplayStatus();
+                    return $model->getDisplayStatusWithAvgScoreOrDisplayStatus();
                 },
             ],
         ],

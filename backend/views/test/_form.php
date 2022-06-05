@@ -15,7 +15,7 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
-<h4><?= $model->getAttributeLabel('status') . ': ' . $model->getDisplayStatus() ?></h4>
+<h4><?= $model->getAttributeLabel('status') . ': ' . $model->getDisplayStatusWithAvgScoreOrDisplayStatus() ?></h4>
 
 <div class="test-form">
 
