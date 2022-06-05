@@ -30,7 +30,7 @@ class Evaluation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['answer_id'], 'required'],
+            [['answer_id', 'score'], 'required'],
             [['answer_id'], 'integer'],
             [['remark'], 'string'],
             [['score'], 'number'],

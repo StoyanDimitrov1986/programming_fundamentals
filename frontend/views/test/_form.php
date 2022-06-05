@@ -38,7 +38,6 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
         <div class="form-group">
             <?= Html::submitButton('Send', ['class' => 'btn btn-success']) ?>
         </div>
-
     <?php endif ?>
 
     <?php if ($mode === 'view'): ?>

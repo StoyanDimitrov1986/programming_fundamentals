@@ -11,7 +11,7 @@ use Yii;
  * @property int $test_question_id
  * @property string|null $answer
  *
- * @property Evaluation[] $evaluations
+ * @property Evaluation $evaluation
  * @property TestQuestion $testQuestion
  */
 class Answer extends \yii\db\ActiveRecord
@@ -50,13 +50,13 @@ class Answer extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Evaluations]].
+     * Gets query for [[Evaluation]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEvaluations()
+    public function getEvaluation()
     {
-        return $this->hasMany(Evaluation::className(), ['answer_id' => 'id']);
+        return $this->hasOne(Evaluation::className(), ['answer_id' => 'id']);
     }
 
     /**

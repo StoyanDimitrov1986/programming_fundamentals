@@ -26,7 +26,11 @@ $this->title = 'Evaluating tests';
                 'attribute' => 'lecture_id',
                 'format' => 'raw',
                 'value' => function (Test $model) {
-                    return Html::a(Html::encode($model->lecture->name), Url::to(['/test_questions/take/', 'id' => $model->id]));
+                    if ($model->status === Test::STATUS_EVALUATED) {
+                        return Html::a(Html::encode($model->lecture->name), Url::to(['/test/update-evaluation/', 'id' => $model->id]));
+                    }
+
+                    return Html::a(Html::encode($model->lecture->name), Url::to(['/test/evaluate/', 'id' => $model->id]));
                 },
                 'filter' => ArrayHelper::map(Lecture::find()->asArray()->all(), 'id', 'name'),
             ],
@@ -45,10 +49,26 @@ $this->title = 'Evaluating tests';
                 'attribute' => 'status',
                 'filter' => [
                     Test::STATUS_WAITING_EVALUATION => Test::DISPLAY_STATUSES[Test::STATUS_WAITING_EVALUATION],
-                    Test::STATUS_EVALUATED => Test::DISPLAY_STATUSES[Test::STATUS_EVALUATED ]
+                    Test::STATUS_EVALUATED => Test::DISPLAY_STATUSES[Test::STATUS_EVALUATED]
                 ],
                 'value' => function (Test $model) {
-                    return $model->getDisplayStatus();
+                    $status = $model->getDisplayStatus();
+
+                    if ($model->status !== Test::STATUS_EVALUATED) {
+                        return $status;
+                    }
+
+                    $totalScore = [];
+
+                    foreach ($model->testQuestions as $testQuestion) {
+                        foreach ($testQuestion->answers as $answer) {
+                            $totalScore[] = $answer->evaluation->score;
+                        }
+                    }
+
+                    $avgScore = array_sum($totalScore) / count($totalScore);
+
+                    return $status . ' (' . number_format($avgScore, '2') . ')';
                 },
             ],
         ],
