@@ -21,6 +21,7 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
     <?php $form = ActiveForm::begin(); ?>
 
     <?php
+
     foreach ($model->testQuestions as $key => $testQuestion) {
         echo $form->field($answers[$testQuestion->id], '[' . $testQuestion->id . ']' . 'answer')
             ->textarea(['rows' => 4, 'disabled' => $mode === 'view'])
@@ -29,6 +30,10 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
         echo $form->field($answers[$testQuestion->id], '[' . $testQuestion->id . ']' . 'test_question_id')
             ->hiddenInput(['value' => $testQuestion->id])
             ->label(false);
+
+        echo Html::label('You can test your solution here:');
+
+        echo '<iframe src="https://onecompiler.com/php" height="600px" width="100%"></iframe>';
 
         echo Html::tag('hr');
     }
