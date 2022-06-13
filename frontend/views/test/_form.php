@@ -31,9 +31,11 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
             ->hiddenInput(['value' => $testQuestion->id])
             ->label(false);
 
-        echo Html::label('You can test your solution here:');
+        if ($mode !== 'view') {
+            echo Html::label('You can test your solution here:');
 
-        echo '<iframe src="https://onecompiler.com/php" height="600px" width="100%"></iframe>';
+            echo '<iframe src="https://onecompiler.com/php" height="600px" width="100%"></iframe>';
+        }
 
         echo Html::tag('hr');
     }
