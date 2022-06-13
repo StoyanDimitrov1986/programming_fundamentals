@@ -125,7 +125,7 @@ class TestController extends Controller
         foreach ($model->testQuestions as $testQuestion) {
             foreach ($testQuestion->answers as $answer) {
                 $answers[$testQuestion->id] = $answer;
-                $evaluations[$answer->id] = $answer->evaluation;
+                $evaluations[$answer->id] = new Evaluation();
             }
         }
 
