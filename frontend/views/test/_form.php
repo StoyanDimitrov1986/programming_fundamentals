@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Test;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -23,11 +24,13 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
     <?php
 
     foreach ($model->testQuestions as $key => $testQuestion) {
-        echo $form->field($answers[$testQuestion->id], '[' . $testQuestion->id . ']' . 'answer')
+        $answer = $answers[$testQuestion->id];
+
+        echo $form->field($answer, '[' . $testQuestion->id . ']' . 'answer')
             ->textarea(['rows' => 4, 'disabled' => $mode === 'view'])
             ->label(++$key . '. ' . $testQuestion->question->question);
 
-        echo $form->field($answers[$testQuestion->id], '[' . $testQuestion->id . ']' . 'test_question_id')
+        echo $form->field($answer, '[' . $testQuestion->id . ']' . 'test_question_id')
             ->hiddenInput(['value' => $testQuestion->id])
             ->label(false);
 
@@ -35,6 +38,26 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
             echo Html::label('You can test your solution here:');
 
             echo '<iframe src="https://onecompiler.com/php" height="600px" width="100%"></iframe>';
+        } else {
+            echo $form->field($testQuestion->question, '[' . $testQuestion->question->id . ']' . 'question_id')
+                ->textarea(['rows' => 4, 'value' => $testQuestion->question->solution, 'disabled' => true])
+                ->label('(Evaluation) More info:', ['style' => 'color: orange']);
+
+            if ($model->status === Test::STATUS_EVALUATED) {
+                $evaluation = $answer->evaluation;
+
+                echo $form->field($evaluation, '[' . $answer->id . ']' . 'remark')
+                    ->textarea(['rows' => 4, 'value' => $evaluation->remark, 'disabled' => $mode === 'view'])
+                    ->label('(Evaluation) Remark:', ['style' => 'color: orange']);
+
+                echo $form->field($evaluation, '[' . $answer->id . ']' . 'score')
+                    ->textInput(['type' => 'number', 'value' => $evaluation->score, 'min' => '2', 'max' => '6', 'step' => 'any', 'disabled' => $mode === 'view'])
+                    ->label('(Evaluation) Score:', ['style' => 'color: orange', 'required ' => true]);
+
+                echo $form->field($evaluation, '[' . $answer->id . ']' . 'answer_id')
+                    ->hiddenInput(['value' => $answer->id, 'disabled' => $mode === 'view'])
+                    ->label(false);
+            }
         }
 
         echo Html::tag('hr');
