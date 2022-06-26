@@ -14,7 +14,7 @@ $this->title = '(Teacher) Programming fundamentals';
         <?php if (Yii::$app->user->isGuest) {
             echo "<p><a class='btn btn-lg btn-success' href='" . Url::to('site/login') . "'>Login</a></p>";
         } else {
-            echo "<p><a class='btn btn-lg btn-success' href='" . Url::to('test/index') . "'>Go to evaluation section</a></p>";
+            echo "<p><a class='btn btn-lg btn-success' href='" . Url::to('test/view-waiting') . "'>Go to evaluation section</a></p>";
         } ?>
     </div>
 </div>
