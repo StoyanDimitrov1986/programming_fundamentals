@@ -16,7 +16,6 @@ return [
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
-            'defaultRoles' => ['Student']
             // uncomment if you want to cache RBAC items hierarchy
             // 'cache' => 'cache',
         ],
