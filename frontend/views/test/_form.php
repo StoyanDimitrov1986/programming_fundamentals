@@ -52,11 +52,11 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
             echo "<div class=\"col-lg-6\">";
             echo $form->field($testQuestion->question, '[' . $testQuestion->question->id . ']' . 'question_id')
                 ->textarea([
-                    'rows' => 4,
+                    'rows' => $model->status === Test::STATUS_WAITING_EVALUATION ? 14 : 4,
                     'value' => $testQuestion->question->solution,
                     'disabled' => true,
                 ])
-                ->label('More info:', ['style' => 'color: orange']);
+                ->label('Read more:', ['style' => 'color: orange']);
 
             if ($model->status === Test::STATUS_EVALUATED) {
                 $evaluation = $answer->evaluation;
