@@ -11,8 +11,11 @@ $this->title = 'Programming fundamentals';
         <h1 class="display-4">Welcome to<br>Programming Fundamentals</h1>
 
         <br>
-
-        <p><a class="btn btn-lg btn-success" href="<?= Url::to('test/index') ?>">Go to your tests</a></p>
+        <?php if (Yii::$app->user->isGuest) {
+            echo "<p><a class='btn btn-lg btn-success' href='" . Url::to('site/login') . "'>Login</a></p>";
+        } else {
+            echo "<p><a class='btn btn-lg btn-success' href='" . Url::to('test/index') . "'>Go to your tests</a></p>";
+        } ?>
     </div>
 
 

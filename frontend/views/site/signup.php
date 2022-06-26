@@ -8,7 +8,7 @@ use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
 
 $this->title = 'Signup';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="site-signup">
     <h1><?= Html::encode($this->title) ?></h1>
