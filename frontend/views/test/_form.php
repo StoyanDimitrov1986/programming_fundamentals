@@ -14,8 +14,11 @@ use yii\widgets\ActiveForm;
 $this->title = 'Test: "' . $model->lecture->name . '"';
 ?>
 
-<h1><?= Html::encode($this->title) ?></h1>
-<h4><?= $model->getAttributeLabel('status') . ': ' . $model->getDisplayStatusWithAvgScoreOrDisplayStatus() ?></h4>
+<div class="jumbotron jumbotron-fluid text-center bg-transparent" style="margin-bottom: 0">
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <h4><?= $model->getAttributeLabel('status') . ': ' . $model->getDisplayStatusWithAvgScoreOrDisplayStatus() ?></h4>
+</div>
 
 <div class="test-form">
 
@@ -24,23 +27,38 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
     <?php
 
     foreach ($model->testQuestions as $key => $testQuestion) {
+        echo "<div class=\"row\">";
+
+        if ($mode !== 'view') {
+            echo "<div class=\"col-lg-12\">";
+        } else {
+            echo "<div class=\"col-lg-6\">";
+        }
+
         $answer = $answers[$testQuestion->id];
 
         echo $form->field($answer, '[' . $testQuestion->id . ']' . 'answer')
-            ->textarea(['rows' => 4, 'disabled' => $mode === 'view'])
+            ->textarea(['rows' => $mode !== 'view' ? 4 : 14, 'disabled' => $mode === 'view'])
             ->label(++$key . '. ' . $testQuestion->question->question);
 
         echo $form->field($answer, '[' . $testQuestion->id . ']' . 'test_question_id')
             ->hiddenInput(['value' => $testQuestion->id])
             ->label(false);
 
+        echo "</div>";
+
         if ($mode !== 'view') {
             echo Html::label('You can test your solution here:');
 
             echo '<iframe src="https://onecompiler.com/php" height="600px" width="100%"></iframe>';
         } else {
+            echo "<div class=\"col-lg-6\">";
             echo $form->field($testQuestion->question, '[' . $testQuestion->question->id . ']' . 'question_id')
-                ->textarea(['rows' => 4, 'value' => $testQuestion->question->solution, 'disabled' => true])
+                ->textarea([
+                    'rows' => 4,
+                    'value' => $testQuestion->question->solution,
+                    'disabled' => true,
+                ])
                 ->label('(Evaluation) More info:', ['style' => 'color: orange']);
 
             if ($model->status === Test::STATUS_EVALUATED) {
@@ -58,7 +76,10 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
                     ->hiddenInput(['value' => $answer->id, 'disabled' => $mode === 'view'])
                     ->label(false);
             }
+            echo "</div>";
         }
+
+        echo "</div>";
 
         echo Html::tag('hr');
     }
