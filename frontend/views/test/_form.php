@@ -3,6 +3,7 @@
 use common\models\Test;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\bootstrap4\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Test */
@@ -47,11 +48,7 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
 
         echo "</div>";
 
-        if ($mode !== 'view') {
-            echo Html::label('You can test your solution here:');
-
-            echo '<iframe src="https://onecompiler.com/php" height="600px" width="100%"></iframe>';
-        } else {
+        if ($mode === 'view') {
             echo "<div class=\"col-lg-6\">";
             echo $form->field($testQuestion->question, '[' . $testQuestion->question->id . ']' . 'question_id')
                 ->textarea([
@@ -59,7 +56,7 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
                     'value' => $testQuestion->question->solution,
                     'disabled' => true,
                 ])
-                ->label('(Evaluation) More info:', ['style' => 'color: orange']);
+                ->label('More info:', ['style' => 'color: orange']);
 
             if ($model->status === Test::STATUS_EVALUATED) {
                 $evaluation = $answer->evaluation;
@@ -96,4 +93,23 @@ $this->title = 'Test: "' . $model->lecture->name . '"';
     <?php endif ?>
 
     <?php ActiveForm::end(); ?>
+
+    <?php
+    Modal::begin([
+        'title' => 'Online compiler',
+        'size' => Modal::SIZE_EXTRA_LARGE,
+        'toggleButton' => [
+            'tag' => 'button',
+            'label' => 'Online compiler',
+            'class' => 'btn btn-info',
+            'style' => 'width: 140px; position: fixed; right: 15px; bottom: 15px; float: right !important;'
+        ],
+    ]);
+
+    echo Html::label('You can test your solution here:');
+
+    echo '<iframe src="https://onecompiler.com/php" height="600px" width="100%"></iframe>';
+
+    Modal::end();
+    ?>
 </div>
